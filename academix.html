@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Academix</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: none; /* Initially hide all containers */
+            position: relative; /* For positioning the back button */
+        }
+        .container.active {
+            display: block; /* Show the active container */
+        }
+        h1, h2 {
+            font-size: 2.5rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #0056b3;
+        }
+        .role-button {
+            background-color: #28a745;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 1rem;
+        }
+        .role-button:hover {
+            background-color: #218838;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .login-button {
+            background-color: #ffc107;
+            color: #000;
+        }
+        .login-button:hover {
+            background-color: #e0a800;
+        }
+        .link {
+            color: #007bff;
+            cursor: pointer;
+            text-decoration: underline;
+        }
+        .dashboard {
+            text-align: left;
+        }
+        .dashboard h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .dashboard p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .dashboard .menu-item {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .dashboard .menu-item:hover {
+            background-color: #e2e6ea;
+        }
+        .evaluation {
+            text-align: left;
+        }
+        .evaluation h2 {
+            font-size: 2rem;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .evaluation p {
+            font-size: 1.2rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        .evaluation .category {
+            background-color: #f8f9fa;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        .evaluation .category:hover {
+            background-color: #e2e6ea;
+        }
+        .result {
+            margin-top: 20px;
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .back-button {
+            background-color: #6c757d;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            margin-bottom: 20px; /* Add space below the back button */
+        }
+        .back-button:hover {
+            background-color: #5a6268;
+        }
+        .emoji {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        .school-icon {
+            width: 100px;
+            margin-bottom: 20px;
+        }
+        .progress-bar {
+            width: 100%;
+            background-color: #e0e0e0;
+            border-radius: 10px;
+            overflow: hidden;
+            margin: 20px 0;
+        }
+        .progress-bar-fill {
+            height: 20px;
+            border-radius: 10px;
+        }
+        .progress-bar-fill.red {
+            background-color: #dc3545; /* Red for weak students */
+        }
+        .progress-bar-fill.green {
+            background-color: #28a745; /* Green for outstanding students */
+        }
+        .student-list {
+            text-align: left;
+            margin-top: 20px;
+        }
+        .student-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 15px;
+        }
+        .student-name {
+            font-size: 1.2rem;
+            color: #333;
+        }
+        .student-percentage {
+            font-size: 1.2rem;
+            color: #333;
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div id="page1" class="container active">
+        <h1>Welcome to Academix 🎓</h1>
+        <p>The Academix app offers students and tutors unparalleled convenience by granting effortless access to critical academic information.</p>
+        <button class="button" onclick="showPage('page2')">Get started</button>
+    </div>
+
+    <div id="page2" class="container">
+        <button class="back-button" onclick="showPage('page1')">⬅️ Back</button>
+        <h1>Who are you? 👤</h1>
+        <p>Please tell us a little bit about yourself</p>
+        <button class="button role-button" onclick="selectRole('Student')">👨‍🎓 Student</button>
+        <button class="button role-button" onclick="selectRole('Tutor')">👩‍🏫 Tutor</button>
+        <button class="button role-button" onclick="selectRole('Parent')">👪 Parent</button>
+    </div>
+
+    <div id="loginPage" class="container">
+        <button class="back-button" onclick="showPage('page2')">⬅️ Back</button>
+        <h1>Enter your details 📝</h1>
+        <input type="text" id="email" placeholder="Email or username">
+        <input type="password" id="password" placeholder="Password">
+        <button class="button login-button" onclick="login()">Sign in</button>
+        <p class="link" onclick="forgotPassword()">🔒 FORGOT PASSWORD</p>
+        <p class="link" onclick="showPage('page2')">📄 I don't have an account</p>
+    </div>
+
+    <div id="tutorDashboard" class="container dashboard">
+        <button class="back-button" onclick="showPage('loginPage')">⬅️ Back</button>
+        <h2>Welcome again! 👋</h2>
+        <p>Mohamed Aly</p>
+        <p>Teacher</p>
+        <div class="menu-item" onclick="navigateTo('Grades')">📊 Grades</div>
+        <div class="menu-item" onclick="navigateTo('Assignments')">📚 Assignments</div>
+        <div class="menu-item" onclick="navigateTo('Attendance')">📅 Attendance</div>
+        <div class="menu-item" onclick="navigateTo('Students')">👥 Students</div>
+        <div class="menu-item" onclick="showPage('evaluationPage')">📈 Evaluation</div>
+    </div>
+
+    <div id="studentDashboard" class="container">
+        <button class="back-button" onclick="showPage('loginPage')">⬅️ Back</button>
+        <h2>Welcome, Student! 👨‍🎓</h2>
+        <p>Your GPA: <strong>3.74</strong></p>
+        <div class="progress-bar">
+            <div class="progress-bar-fill green" style="width: 90%;"></div>
+        </div>
+        <p>You are an <strong>Outstanding Student</strong> and ranked <strong>4th</strong> in your class. 🏆</p>
+        <div class="advanced-lectures">
+            <h3>Advanced Lectures for Outstanding Students</h3>
+            <p>Check out this advanced lecture to enhance your knowledge:</p>
+            <a href="https://www.example.com/advanced-lectures" target="_blank">Advanced Calculus Lecture</a>
+        </div>
+    </div>
+
+    <div id="evaluationPage" class="container evaluation">
+        <button class="back-button" onclick="showPage('tutorDashboard')">⬅️ Back</button>
+        <h2>Students Evaluation 📊</h2>
+        <p>Mohamed Aly</p>
+        <p>Teacher</p>
+        <div class="category" onclick="navigateTo('CriticalStudents')">🔍 Performance Predictions</div>
+        <div class="category" onclick="navigateTo('OutstandingStudents')">🌟 Outstanding students</div>
+        <div class="category" onclick="navigateTo('WeekStudents')">⚠️ Weak students</div>
+    </div>
+
+    <div id="weakStudentsPage" class="container">
+        <button class="back-button" onclick="showPage('evaluationPage')">⬅️ Back</button>
+        <h2>Weak Students ⚠️</h2>
+        <div class="student-list">
+            <div class="student-item">
+                <span class="student-name">Omar Mahmoud</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill red" style="width: 20%;"></div>
+                </div>
+                <span class="student-percentage">20%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Kareem Safwat</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill red" style="width: 25%;"></div>
+                </div>
+                <span class="student-percentage">25%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Mohamed Samy</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill red" style="width: 30%;"></div>
+                </div>
+                <span class="student-percentage">30%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Yehia Yasser</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill red" style="width: 40%;"></div>
+                </div>
+                <span class="student-percentage">40%</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="outstandingStudentsPage" class="container">
+        <button class="back-button" onclick="showPage('evaluationPage')">⬅️ Back</button>
+        <h2>Outstanding Students 🌟</h2>
+        <div class="student-list">
+            <div class="student-item">
+                <span class="student-name">Ahmed Adel</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill green" style="width: 85%;"></div>
+                </div>
+                <span class="student-percentage">85%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Mohamed Essam</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill green" style="width: 90%;"></div>
+                </div>
+                <span class="student-percentage">90%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Eslam Kamal</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill green" style="width: 95%;"></div>
+                </div>
+                <span class="student-percentage">95%</span>
+            </div>
+            <div class="student-item">
+                <span class="student-name">Salma Kamal</span>
+                <div class="progress-bar">
+                    <div class="progress-bar-fill green" style="width: 100%;"></div>
+                </div>
+                <span class="student-percentage">100%</span>
+            </div>
+        </div>
+    </div>
+
+    <div id="criticalStudentsPage" class="container">
+        <button class="back-button" onclick="showPage('evaluationPage')">⬅️ Back</button>
+        <h1>Performance Prediction 📈</h1>
+        <p>Please enter the required details:</p>
+        <input type="number" id="hours_studied" placeholder="Hours Studied">
+        <input type="number" id="previous_scores" placeholder="Previous Scores ">
+        <input type="number" id="extracurricular_activities" placeholder="Extracurricular Activities (0 or 1)">
+        <input type="number" id="sleep_hours" placeholder="Sleep Hours ">
+        <input type="number" id="sample_question_papers" placeholder="Sample Question Papers Solved1">
+        <button class="button" onclick="predictPerformance()">Predict</button>
+        <div class="result" id="result"></div>
+    </div>
+
+    <script>
+        // Coefficients and intercept
+        const intercept = -33.836543807141744;
+        const coefficients = [2.85895223, 1.01551979, 0.58171285, 0.47967676, 0.19039416];
+
+        // Track the selected role (Student or Tutor)
+        let selectedRole = null;
+
+        function showPage(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.container').forEach(page => {
+                page.classList.remove('active');
+            });
+            // Show the selected page
+            document.getElementById(pageId).classList.add('active');
+        }
+
+        function selectRole(role) {
+            selectedRole = role; // Store the selected role
+            showPage('loginPage');
+        }
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+
+            // Simple validation for demonstration
+            if (email && password) {
+                if (selectedRole === 'Student') {
+                    showPage('studentDashboard'); // Redirect to student dashboard
+                } else if (selectedRole === 'Tutor') {
+                    showPage('tutorDashboard'); // Redirect to tutor dashboard
+                } else {
+                    alert('Please select a role first.');
+                }
+            } else {
+                alert('Please enter your email and password');
+            }
+        }
+
+        function forgotPassword() {
+            alert('Forgot Password clicked');
+        }
+
+        function navigateTo(page) {
+            // Hide all pages
+            document.querySelectorAll('.container').forEach(page => {
+                page.classList.remove('active');
+            });
+
+            // Show the correct page based on the navigation
+            if (page === 'CriticalStudents') {
+                document.getElementById('criticalStudentsPage').classList.add('active');
+            } else if (page === 'OutstandingStudents') {
+                document.getElementById('outstandingStudentsPage').classList.add('active');
+            } else if (page === 'WeekStudents') {
+                document.getElementById('weakStudentsPage').classList.add('active');
+            } else {
+                alert('Navigating to: ' + page);
+            }
+        }
+
+        function predictPerformance() {
+            // Get user inputs
+            const hoursStudied = parseFloat(document.getElementById('hours_studied').value);
+            const previousScores = parseFloat(document.getElementById('previous_scores').value);
+            const extracurricularActivities = parseFloat(document.getElementById('extracurricular_activities').value);
+            const sleepHours = parseFloat(document.getElementById('sleep_hours').value);
+            const samplePapers = parseFloat(document.getElementById('sample_question_papers').value);
+
+            // Validate inputs
+            if (isNaN(hoursStudied) || isNaN(previousScores) || isNaN(extracurricularActivities) || isNaN(sleepHours) || isNaN(samplePapers)) {
+                alert('Please fill all the fields with valid numbers!');
+                return;
+            }
+
+            // Calculate the predicted value
+            const y = intercept +
+                (coefficients[0] * hoursStudied) +
+                (coefficients[1] * previousScores) +
+                (coefficients[2] * extracurricularActivities) +
+                (coefficients[3] * sleepHours) +
+                (coefficients[4] * samplePapers);
+
+            // Display the result
+            document.getElementById('result').innerText = `Predicted Performance: ${y.toFixed(2)}`;
+        }
+    </script>
+</body>
+</html>
